@@ -1,0 +1,91 @@
+/* FoodSearch.css */
+
+/* General Styles */
+.food-search-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-input-container {
+  display: flex;
+  flex-direction: column; /* Change to column to stack input and button vertically */
+  align-items: center; /* Center items horizontally */
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Input Styles */
+input {
+  width: 100%; /* Take up the full width of its container */
+  padding: 15px; /* Increase padding for a larger input field */
+  border: 2px solid #3498db;
+  border-radius: 6px;
+  outline: none;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #27ae60;
+}
+
+/* Button Styles */
+button {
+  width: 100%; /* Take up the full width of its container */
+  padding: 15px; /* Increase padding for a larger button */
+  background-color: #27ae60;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #219d54;
+}
+
+/* Error Message Styles */
+.error-message {
+  color: #e74c3c;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* Food Item Styles */
+.food-item {
+  background-color: #ecf0f1;
+  border: 2px solid #bdc3c7;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.food-item h3 {
+  color: #3498db;
+}
+
+.food-item p {
+  margin: 5px 0;
+}
+
+.img-size {
+  max-width: 100%;
+  max-height: 100px; /* Adjust the max height as needed */
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.3s ease;
+}
+
+.img-size:hover {
+  transform: scale(1.1);
+}

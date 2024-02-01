@@ -1,0 +1,106 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  width: 600px;
+  max-width: 600px;
+  margin: 20px;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #495057;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 2px solid #3498db;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 16px;
+  background-color: #ecf0f1;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input:hover,
+select:hover,
+textarea:hover,
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #2980b9;
+  background-color: #dfe6e9;
+}
+
+button {
+  width: 100%;
+  background-color: #27ae60;
+  color: #fff;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #218c53;
+}
+
+output,
+#idealWeightRange {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #3498db;
+}
+
+.checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.checkbox-group div {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-group input {
+  margin-right: 5px;
+  transform: scale(1.2);
+}
+
+.checkbox-group label {
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+@media only screen and (max-width: 600px) {
+  form {
+    margin: 10px;
+    padding: 20px;
+  }
+
+  button {
+    font-size: 15px;
+  }
+}
