@@ -62,13 +62,6 @@ const parameters = {
       type: "number",
       placeholder: "Hedef kilo giriniz..",
     },
-
-    {
-      id: "bkiReferance",
-      label: "BKİ Referans Aralığı",
-      type: "number",
-      placeholder: "BKİ referans aralığı..",
-    },
     {
       id: "anamnesis",
       label: "Anamnez",
