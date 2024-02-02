@@ -35,10 +35,7 @@ const UserFormFields = ({ fields, initialValues }) => {
               element.value = initialValues[field.id] || "";
               setMedications(initialValues[field.id + "Items"] || []);
               break;
-            case "bloodIndicators":
-              element.value = initialValues[field.id] || "";
-              setBloodIndicators(initialValues[field.id + "Items"] || []);
-              break;
+
             default:
               element.value = initialValues[field.id] || "";
               break;
@@ -59,9 +56,7 @@ const UserFormFields = ({ fields, initialValues }) => {
       case "medications":
         setMedicationInputValue(e.target.value);
         break;
-      case "bloodIndicators":
-        setBloodIndicatorsInputValue(e.target.value);
-        break;
+
       default:
         break;
     }
@@ -85,14 +80,7 @@ const UserFormFields = ({ fields, initialValues }) => {
         handleAddItem(medications, setMedications, medicationInputValue);
         setMedicationInputValue("");
         break;
-      case "bloodIndicators":
-        handleAddItem(
-          bloodIndicators,
-          setBloodIndicators,
-          bloodIndicatorsInputValue
-        );
-        setBloodIndicatorsInputValue("");
-        break;
+
       default:
         break;
     }
@@ -150,280 +138,332 @@ const UserFormFields = ({ fields, initialValues }) => {
     <div>
       {fields.map((field) => (
         <div key={field.id}>
-          <label htmlFor={field.id}>{field.label}:</label>
-          {field.type === "select" ? (
-            <select id={field.id} name={field.id}>
-              <option value="" disabled selected>
-                {field.placeholder || "Select..."}
-              </option>
-              {field.options.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          ) : field.id === "alergies" ||
-            field.id === "chronicDiseases" ||
-            field.id === "bloodIndicators" ||
-            field.id === "medications" ? (
+          {field.id === "bloodIndicators" ? (
             <div>
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <label htmlFor={field.id}>{field.label}:</label>
+              {field.type === "select" && (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <select
+                    value={selectedBloodIndicator}
+                    onChange={handleBloodIndicatorChange}
+                  >
+                    <option value="" disabled>
+                      {field.placeholder || "Seçiniz..."}
+                    </option>
+                    {field.options.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <input
+                    type="number"
+                    placeholder="Değer giriniz..."
+                    value={bloodIndicatorNumericValue}
+                    onChange={handleBloodIndicatorNumericChange}
+                    style={{ marginRight: "5px" }}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleBloodIndicatorButtonClick}
+                  >
+                    Ekle
+                  </button>
+                </div>
+              )}
+              <ul style={{ listStyle: "none", padding: 0 }}>
+                {bloodIndicators.map((element, index) => (
+                  <li
+                    key={index}
+                    style={{ display: "inline-block", marginRight: "5px" }}
+                  >
+                    <div
+                      style={{
+                        backgroundColor: "#e1e8ec",
+                        borderRadius: "30px",
+                        padding: "6px",
+                        margin: "5px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <label
+                        style={{
+                          marginRight: "5px",
+                          fontSize: "12px",
+                          marginBottom: 0,
+                        }}
+                      >
+                        {element}
+                      </label>
+                      <button
+                        type="button"
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          width: "60px",
+                          height: "20px",
+                          textAlign: "center",
+                          verticalAlign: "middle",
+                          backgroundColor: "#e1e8ec",
+                        }}
+                        onClick={() => handleDeleteButtonClick(index, field.id)}
+                      >
+                        X
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <div key={field.id}>
+              <label htmlFor={field.id}>{field.label}:</label>
+              {field.type === "select" ? (
+                <select id={field.id} name={field.id}>
+                  <option value="" disabled selected>
+                    {field.placeholder || "Select..."}
+                  </option>
+                  {field.options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              ) : field.id === "alergies" ||
+                field.id === "chronicDiseases" ||
+                field.id === "medications" ? (
+                <div>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <input
+                      type={field.type}
+                      id={field.id}
+                      name={field.id}
+                      placeholder={field.placeholder}
+                      value={
+                        field.id === "alergies"
+                          ? allergyInputValue
+                          : field.id === "chronicDiseases"
+                          ? chronicDiseaseInputValue
+                          : field.id === "medications"
+                          ? medicationInputValue
+                          : ""
+                      }
+                      onChange={(e) => handleInputChange(field.id, e)}
+                      style={{ marginRight: "5px" }}
+                    />
+                    {field.id === "bloodIndicators" && (
+                      <>
+                        <select
+                          value={selectedBloodIndicator}
+                          onChange={handleBloodIndicatorChange}
+                        >
+                          <option value="" disabled>
+                            {field.placeholder || "Seçiniz..."}
+                          </option>
+                          {field.options.map((option) => (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </select>
+                        <input
+                          type="number"
+                          placeholder="Değer giriniz..."
+                          value={bloodIndicatorNumericValue}
+                          onChange={handleBloodIndicatorNumericChange}
+                          style={{ marginRight: "5px" }}
+                        />
+                        <button
+                          type="button"
+                          style={{
+                            marginBottom: "13px",
+                            width: "60px",
+                            height: "45px",
+                          }}
+                          onClick={handleBloodIndicatorButtonClick}
+                        >
+                          Ekle
+                        </button>
+                      </>
+                    )}
+                    {field.id !== "bloodIndicators" && (
+                      <button
+                        type="button"
+                        style={{
+                          marginBottom: "13px",
+                          width: "60px",
+                          height: "45px",
+                        }}
+                        onClick={() => handleButtonClick(field.id)}
+                      >
+                        Ekle
+                      </button>
+                    )}
+                  </div>
+                  <ul style={{ listStyle: "none", padding: 0 }}>
+                    {field.id === "alergies"
+                      ? allergies.map((element, index) => (
+                          <li
+                            key={index}
+                            style={{
+                              display: "inline-block",
+                              marginRight: "5px",
+                            }}
+                          >
+                            <div
+                              style={{
+                                backgroundColor: "#e1e8ec",
+                                borderRadius: "30px",
+                                padding: "6px",
+                                margin: "5px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <label
+                                style={{
+                                  marginRight: "5px",
+                                  fontSize: "12px",
+                                  marginBottom: 0,
+                                }}
+                              >
+                                {element}
+                              </label>
+                              <button
+                                type="button"
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  width: "auto",
+                                  height: "20px",
+                                  textAlign: "center",
+                                  verticalAlign: "middle",
+                                  backgroundColor: "#e1e8ec",
+                                }}
+                                onClick={() =>
+                                  handleDeleteButtonClick(index, field.id)
+                                }
+                              >
+                                X
+                              </button>
+                            </div>
+                          </li>
+                        ))
+                      : field.id === "chronicDiseases"
+                      ? chronicDiseases.map((element, index) => (
+                          <li
+                            key={index}
+                            style={{
+                              display: "inline-block",
+                              marginRight: "5px",
+                            }}
+                          >
+                            <div
+                              style={{
+                                backgroundColor: "#e1e8ec",
+                                borderRadius: "30px",
+                                padding: "6px",
+                                margin: "5px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <label
+                                style={{
+                                  marginRight: "5px",
+                                  fontSize: "12px",
+                                  marginBottom: 0,
+                                }}
+                              >
+                                {element}
+                              </label>
+                              <button
+                                type="button"
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  width: "auto",
+                                  height: "20px",
+                                  textAlign: "center",
+                                  verticalAlign: "middle",
+                                  backgroundColor: "#e1e8ec",
+                                }}
+                                onClick={() =>
+                                  handleDeleteButtonClick(index, field.id)
+                                }
+                              >
+                                X
+                              </button>
+                            </div>
+                          </li>
+                        ))
+                      : medications.map((element, index) => (
+                          <li
+                            key={index}
+                            style={{
+                              display: "inline-block",
+                              marginRight: "5px",
+                            }}
+                          >
+                            <div
+                              style={{
+                                backgroundColor: "#e1e8ec",
+                                borderRadius: "30px",
+                                padding: "6px",
+                                margin: "5px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <label
+                                style={{
+                                  marginRight: "5px",
+                                  fontSize: "12px",
+                                  marginBottom: 0,
+                                }}
+                              >
+                                {element}
+                              </label>
+                              <button
+                                type="button"
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  width: "auto",
+                                  height: "20px",
+                                  textAlign: "center",
+                                  verticalAlign: "middle",
+                                  backgroundColor: "#e1e8ec",
+                                }}
+                                onClick={() =>
+                                  handleDeleteButtonClick(index, field.id)
+                                }
+                              >
+                                X
+                              </button>
+                            </div>
+                          </li>
+                        ))}
+                  </ul>
+                </div>
+              ) : (
                 <input
                   type={field.type}
                   id={field.id}
                   name={field.id}
                   placeholder={field.placeholder}
-                  value={
-                    field.id === "alergies"
-                      ? allergyInputValue
-                      : field.id === "chronicDiseases"
-                      ? chronicDiseaseInputValue
-                      : field.id === "medications"
-                      ? medicationInputValue
-                      : bloodIndicatorsInputValue
-                  }
-                  onChange={(e) => handleInputChange(field.id, e)}
-                  style={{ marginRight: "5px" }}
                 />
-                {field.id === "bloodIndicators" && (
-                  <>
-                    <select
-                      value={selectedBloodIndicator}
-                      onChange={handleBloodIndicatorChange}
-                    >
-                      <option value="" disabled>
-                        {field.placeholder || "Seçiniz..."}
-                      </option>
-                      {field.options.map((option) => (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </select>
-                    <input
-                      type="number"
-                      placeholder="Değer giriniz..."
-                      value={bloodIndicatorNumericValue}
-                      onChange={handleBloodIndicatorNumericChange}
-                      style={{ marginRight: "5px" }}
-                    />
-                    <button
-                      type="button"
-                      onClick={handleBloodIndicatorButtonClick}
-                    >
-                      Ekle
-                    </button>
-                  </>
-                )}
-                <button
-                  type="button"
-                  style={{
-                    marginBottom: "13px",
-                    width: "auto",
-                    height: "45px",
-                  }}
-                  onClick={() => handleButtonClick(field.id)}
-                >
-                  Ekle
-                </button>
-              </div>
-              <ul style={{ listStyle: "none", padding: 0 }}>
-                {field.id === "alergies"
-                  ? allergies.map((element, index) => (
-                      <li
-                        key={index}
-                        style={{ display: "inline-block", marginRight: "5px" }}
-                      >
-                        <div
-                          style={{
-                            backgroundColor: "#e1e8ec",
-                            borderRadius: "30px",
-                            padding: "6px",
-                            margin: "5px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <label
-                            style={{
-                              marginRight: "5px",
-                              fontSize: "12px",
-                              marginBottom: 0,
-                            }}
-                          >
-                            {element}
-                          </label>
-                          <button
-                            type="button"
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              width: "auto",
-                              height: "20px",
-                              textAlign: "center",
-                              verticalAlign: "middle",
-                              backgroundColor: "#e1e8ec",
-                            }}
-                            onClick={() =>
-                              handleDeleteButtonClick(index, field.id)
-                            }
-                          >
-                            X
-                          </button>
-                        </div>
-                      </li>
-                    ))
-                  : field.id === "chronicDiseases"
-                  ? chronicDiseases.map((element, index) => (
-                      <li
-                        key={index}
-                        style={{ display: "inline-block", marginRight: "5px" }}
-                      >
-                        <div
-                          style={{
-                            backgroundColor: "#e1e8ec",
-                            borderRadius: "30px",
-                            padding: "6px",
-                            margin: "5px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <label
-                            style={{
-                              marginRight: "5px",
-                              fontSize: "12px",
-                              marginBottom: 0,
-                            }}
-                          >
-                            {element}
-                          </label>
-                          <button
-                            type="button"
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              width: "auto",
-                              height: "20px",
-                              textAlign: "center",
-                              verticalAlign: "middle",
-                              backgroundColor: "#e1e8ec",
-                            }}
-                            onClick={() =>
-                              handleDeleteButtonClick(index, field.id)
-                            }
-                          >
-                            X
-                          </button>
-                        </div>
-                      </li>
-                    ))
-                  : field.id === "bloodIndicators"
-                  ? bloodIndicators.map((element, index) => (
-                      <li
-                        key={index}
-                        style={{ display: "inline-block", marginRight: "5px" }}
-                      >
-                        <div
-                          style={{
-                            backgroundColor: "#e1e8ec",
-                            borderRadius: "30px",
-                            padding: "6px",
-                            margin: "5px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <label
-                            style={{
-                              marginRight: "5px",
-                              fontSize: "12px",
-                              marginBottom: 0,
-                            }}
-                          >
-                            {element}
-                          </label>
-                          <button
-                            type="button"
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              width: "auto",
-                              height: "20px",
-                              textAlign: "center",
-                              verticalAlign: "middle",
-                              backgroundColor: "#e1e8ec",
-                            }}
-                            onClick={() =>
-                              handleDeleteButtonClick(index, field.id)
-                            }
-                          >
-                            X
-                          </button>
-                        </div>
-                      </li>
-                    ))
-                  : medications.map((element, index) => (
-                      <li
-                        key={index}
-                        style={{ display: "inline-block", marginRight: "5px" }}
-                      >
-                        <div
-                          style={{
-                            backgroundColor: "#e1e8ec",
-                            borderRadius: "30px",
-                            padding: "6px",
-                            margin: "5px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <label
-                            style={{
-                              marginRight: "5px",
-                              fontSize: "12px",
-                              marginBottom: 0,
-                            }}
-                          >
-                            {element}
-                          </label>
-                          <button
-                            type="button"
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              width: "auto",
-                              height: "20px",
-                              textAlign: "center",
-                              verticalAlign: "middle",
-                              backgroundColor: "#e1e8ec",
-                            }}
-                            onClick={() =>
-                              handleDeleteButtonClick(index, field.id)
-                            }
-                          >
-                            X
-                          </button>
-                        </div>
-                      </li>
-                    ))}
-              </ul>
+              )}
             </div>
-          ) : (
-            <input
-              type={field.type}
-              id={field.id}
-              name={field.id}
-              placeholder={field.placeholder}
-            />
           )}
         </div>
       ))}
